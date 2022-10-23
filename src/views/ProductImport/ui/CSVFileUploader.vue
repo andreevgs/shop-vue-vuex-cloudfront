@@ -50,12 +50,15 @@ import Vue from 'vue';
 import axios from 'axios';
 
 const fetchPresignedS3Url = (url: string, fileName: string) => {
+	const authToken = localStorage.getItem('authToken');
+
 	return axios({
 		method: 'GET',
 		url,
 		params: {
 			name: encodeURIComponent(fileName),
 		},
+		headers: authToken ? { Authorization: `Basic ${authToken}` } : {},
 	});
 };
 
@@ -116,9 +119,15 @@ export default Vue.extend({
 			try {
 				await uploadFileBy(this.url, this.file as File);
 			} catch (e) {
-				const msg = this.$t('errorMessage.cantUploadFile', {
-					reason: e.message,
-				});
+				let msg = null;
+
+				if (e.response.status === 401 || e.response.status === 403) {
+					msg = `${e.response.status}:${e.response.data.message}`;
+				} else {
+					msg = this.$t('errorMessage.cantUploadFile', {
+						reason: e.message,
+					});
+				}
 
 				this.showSnackbarMessage(msg.toString());
 			} finally {
