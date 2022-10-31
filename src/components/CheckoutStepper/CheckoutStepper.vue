@@ -65,7 +65,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 
-import { ordersApi } from '@/api/orders-api';
+import { profileApi } from '@/api/profile-api';
 import { CartItem } from '@/models/cart-item';
 
 import VReviewYourCartStep from './ui/ReviewYourCartStep.vue';
@@ -159,8 +159,8 @@ export default Vue.extend({
 				address: this.address,
 			};
 
-			ordersApi
-				.create(order)
+			profileApi
+				.checkoutCart()
 				.then(() => {
 					this.clearCart();
 					this.goNextStep();

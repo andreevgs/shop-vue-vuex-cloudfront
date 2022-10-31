@@ -3,5 +3,5 @@ export const API_PATHS = {
 	order: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
 	import: 'https://jdygfs3xuk.execute-api.eu-west-1.amazonaws.com',
 	bff: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
-	cart: 'https://.execute-api.eu-west-1.amazonaws.com/dev',
+	cart: 'https://b0846ez556.execute-api.eu-central-1.amazonaws.com/api',
 };
