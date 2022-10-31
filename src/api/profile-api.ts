@@ -7,16 +7,32 @@ import { CartItem } from '@/models/cart-item';
 
 interface FetchCartResponse {
 	data: {
-		data: CartItem;
+		data: {
+			cart: {
+				items: CartItem[];
+			};
+		};
 	};
 }
 
 const fetchCart = (): Promise<FetchCartResponse> => {
 	return axios.get(`${API_PATHS.cart}/profile/cart`, {
 		headers: {
-			Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
+			Authorization: `Basic ${localStorage.getItem('authToken')}`,
 		},
 	});
+};
+
+const checkoutCart = () => {
+	return axios.post(
+		`${API_PATHS.cart}/profile/cart`,
+		{},
+		{
+			headers: {
+				Authorization: `Basic ${localStorage.getItem('authToken')}`,
+			},
+		}
+	);
 };
 
 // add, remove - new items
@@ -26,7 +42,7 @@ const updateCart = (items: CartItem[]) => {
 		{ items },
 		{
 			headers: {
-				Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
+				Authorization: `Basic ${localStorage.getItem('authToken')}`,
 			},
 		}
 	);
@@ -35,4 +51,5 @@ const updateCart = (items: CartItem[]) => {
 export const profileApi = {
 	fetchCart,
 	updateCart,
+	checkoutCart,
 };

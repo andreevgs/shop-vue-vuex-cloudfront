@@ -113,6 +113,7 @@ export default Vue.extend({
 
 			try {
 				await productApi.saveProduct(values);
+				console.log(values);
 
 				this.$router.push('/admin/products');
 			} catch (e) {
